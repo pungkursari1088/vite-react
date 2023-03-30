@@ -8,3 +8,6 @@ cd vite-react
 for install tailwinds :
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
+
+install axios for API :
+npm install axios
