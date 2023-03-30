@@ -8,19 +8,31 @@ class BlogPost extends Component {
     post: [],
   };
   componentDidMount() {
-    // fetch("https://jsonplaceholder.typicode.com/posts")
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     this.setState({
-    //       post: json,
-    //     });
-    //   });
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((result) => {
-      console.log(result.data);
-      this.setState({
-        post: result.data,
+    fetch("http://localhost:3000/posts", {
+      headers: {
+        "Access-Control-Allow-Origin": "true",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET,POST,OPTIONS,PUT,PATCH,DELETE",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        this.setState({
+          post: json,
+        });
       });
-    });
+    // const cors = require("cors");
+    // axios.request(cors());
+    // axios
+    //   .get("http://192.168.88.57:3000/posts")
+    //   .then((result) => {
+    //     console.log(result.data);
+    //     this.setState({
+    //       post: result.data,
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
   }
   render() {
     return (
