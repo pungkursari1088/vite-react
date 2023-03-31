@@ -7,32 +7,42 @@ class BlogPost extends Component {
   state = {
     post: [],
   };
-  componentDidMount() {
-    fetch("http://localhost:3000/posts", {
-      headers: {
-        "Access-Control-Allow-Origin": "true",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Methods": "GET,POST,OPTIONS,PUT,PATCH,DELETE",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
+
+  getPostAPI = () => {
+    axios
+      .get("http://localhost:3000/posts")
+      .then((result) => {
         this.setState({
-          post: json,
+          post: result.data,
         });
-      });
-    // const cors = require("cors");
-    // axios.request(cors());
-    // axios
-    //   .get("http://192.168.88.57:3000/posts")
-    //   .then((result) => {
-    //     console.log(result.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  handleRemove = (data) => {
+    console.log(data);
+    axios.delete(`http://localhost:3000/posts/${data}`).then((res) => {
+      console.log(res);
+      this.getPostAPI();
+    });
+  };
+
+  componentDidMount() {
+    // fetch("http://localhost:3000/posts", {
+    //   headers: {
+    //     "Access-Control-Allow-Origin": "true",
+    //     "Access-Control-Allow-Credentials": "true",
+    //     "Access-Control-Allow-Methods": "GET,POST,OPTIONS,PUT,PATCH,DELETE",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     console.log(json);
     //     this.setState({
-    //       post: result.data,
+    //       post: json,
     //     });
-    //   })
-    //   .catch((err) => console.log(err));
+    //   });
+    this.getPostAPI();
   }
   render() {
     return (
@@ -42,9 +52,9 @@ class BlogPost extends Component {
           return (
             <Post
               key={post.id}
-              title={post.title}
-              desc={post.body}
+              data={post}
               image="https://placeimg.com/1200/800/any"
+              remove={this.handleRemove}
             />
           );
         })}

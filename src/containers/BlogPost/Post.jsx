@@ -31,11 +31,17 @@ export const Post = (props) => {
       />
       <div className="flex flex-col justify-between p-4 leading-normal">
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {props.title}
+          {props.data.title}
         </h5>
         <p className="mb-3 font-thin text-xs text-gray-700 dark:text-gray-400">
-          {props.desc}
+          {props.data.body}
         </p>
+        <button
+          className="px-1 py-2 rounded-sm bg-blue-500 justify-center hover:bg-blue-700"
+          onClick={() => props.remove(props.data.id)}
+        >
+          REMOVE
+        </button>
       </div>
     </a>
   );
